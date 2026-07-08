@@ -18,19 +18,19 @@ export default function ChecklistTab({ project }: { project: Project }) {
 
   const renderItem = (it: ChecklistItem) => (
     <div className="chk-item" key={it.id}>
-      <div className="chk-label">
+      <div className="chk-top">
         <div className="name">{it.label}{it.important && <span className="star">＊</span>}</div>
-        {it.hint && <div className="hint">{it.hint}</div>}
+        <div className="chk-states">
+          {STATES.map(s => (
+            <button key={s.v}
+              className={project.checklist[it.id] === s.v ? s.cls : ''}
+              onClick={() => setState(it.id, s.v)}>
+              {s.label}
+            </button>
+          ))}
+        </div>
       </div>
-      <div className="chk-states">
-        {STATES.map(s => (
-          <button key={s.v}
-            className={project.checklist[it.id] === s.v ? s.cls : ''}
-            onClick={() => setState(it.id, s.v)}>
-            {s.label}
-          </button>
-        ))}
-      </div>
+      {it.hint && <div className="chk-hint">{it.hint}</div>}
       {project.checklist[it.id] === 'bad' && (
         <div className="chk-memo">
           <textarea defaultValue={project.checklistMemo[it.id] ?? ''} placeholder="어떤 문제가 있었는지 자세히 적어두렴"

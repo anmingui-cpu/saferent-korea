@@ -27,19 +27,19 @@ export default function LegalTab({ project }: { project: Project }) {
           <div className="group-intro">{g.intro}</div>
           {g.items.map(it => (
             <div className="chk-item" key={it.id}>
-              <div className="chk-label">
+              <div className="chk-top">
                 <div className="name">{it.label}</div>
-                <div className="hint">{it.desc}</div>
+                <div className="chk-states">
+                  {STATES.map(s => (
+                    <button key={s.v}
+                      className={project.legal[it.id] === s.v ? s.cls : ''}
+                      onClick={() => setState(it.id, s.v)}>
+                      {s.label}
+                    </button>
+                  ))}
+                </div>
               </div>
-              <div className="chk-states">
-                {STATES.map(s => (
-                  <button key={s.v}
-                    className={project.legal[it.id] === s.v ? s.cls : ''}
-                    onClick={() => setState(it.id, s.v)}>
-                    {s.label}
-                  </button>
-                ))}
-              </div>
+              <div className="chk-hint">{it.desc}</div>
               {project.legal[it.id] === 'bad' && (
                 <div className="chk-memo">
                   <textarea defaultValue={project.legalMemo[it.id] ?? ''} placeholder="어떤 문제를 발견했는지 자세히 적어두렴"

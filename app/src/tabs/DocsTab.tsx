@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '../db'
-import { DOC_TYPES } from '../data'
+import { DOC_TYPES, DOC_TYPE_DESCS } from '../data'
 
 export default function DocsTab({ projectId }: { projectId: number }) {
   const [type, setType] = useState(DOC_TYPES[0])
@@ -38,6 +38,12 @@ export default function DocsTab({ projectId }: { projectId: number }) {
             {DOC_TYPES.map(t => <option key={t}>{t}</option>)}
           </select>
         </div>
+        {DOC_TYPE_DESCS[type] && (
+          <div className="doc-desc">
+            <div className="doc-desc-why">📌 {DOC_TYPE_DESCS[type].why}</div>
+            <div className="doc-desc-role">{DOC_TYPE_DESCS[type].role}</div>
+          </div>
+        )}
         <input ref={fileRef} type="file" multiple hidden onChange={e => onFiles(e.target.files)} />
         <button className="btn full" onClick={() => fileRef.current?.click()}>📄 [{type}] 파일 추가</button>
         <p className="muted" style={{ marginTop: 8 }}>PDF든 사진이든 다 넣어두렴. 이 폰 안에만 저장되니 걱정 없단다.</p>
