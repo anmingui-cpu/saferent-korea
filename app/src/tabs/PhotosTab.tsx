@@ -52,7 +52,7 @@ export default function PhotosTab({ projectId }: { projectId: number }) {
         <button className="btn full" onClick={() => fileRef.current?.click()}>📷 [{category}] 사진 추가</button>
       </div>
 
-      {photos?.length === 0 && <div className="empty">등록된 사진이 없습니다.</div>}
+      {photos?.length === 0 && <div className="empty">아직 사진이 없구나.<br />많이 찍어둘수록 나중에 비교할 때 큰 도움이 된단다.</div>}
 
       {grouped.map(g => (
         <div className="card" key={g.cat}>

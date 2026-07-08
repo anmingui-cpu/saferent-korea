@@ -17,7 +17,7 @@ export default function VisitsTab({ projectId }: { projectId: number }) {
     <>
       <button className="btn full ghost" onClick={addVisit}>＋ 방문 기록 추가</button>
       <div style={{ height: 12 }} />
-      {visits?.length === 0 && <div className="empty">방문 기록이 없습니다.<br />방문은 여러 번 등록할 수 있습니다.</div>}
+      {visits?.length === 0 && <div className="empty">아직 방문 기록이 없구나.<br />집은 여러 번 가볼수록 보이는 게 많단다. 갈 때마다 기록해두렴.</div>}
       {visits?.map((v, i) => (
         <div className="card" key={v.id}>
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: 8 }}>
@@ -38,7 +38,7 @@ export default function VisitsTab({ projectId }: { projectId: number }) {
             <label>메모</label>
             <textarea defaultValue={v.memo} placeholder="방문 시 느낀 점, 확인한 내용" onChange={e => update(v.id!, { memo: e.target.value })} />
           </div>
-          <p className="muted">사진은 '사진' 탭에서 분류별로 등록하세요.</p>
+          <p className="muted">사진은 '사진' 탭에서 분류별로 정리해두자.</p>
         </div>
       ))}
     </>

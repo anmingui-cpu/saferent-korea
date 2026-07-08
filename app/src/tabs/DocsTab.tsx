@@ -40,10 +40,10 @@ export default function DocsTab({ projectId }: { projectId: number }) {
         </div>
         <input ref={fileRef} type="file" multiple hidden onChange={e => onFiles(e.target.files)} />
         <button className="btn full" onClick={() => fileRef.current?.click()}>📄 [{type}] 파일 추가</button>
-        <p className="muted" style={{ marginTop: 8 }}>PDF·이미지 등 모든 파일 형식을 이 기기 안에만 저장합니다.</p>
+        <p className="muted" style={{ marginTop: 8 }}>PDF든 사진이든 다 넣어두렴. 이 폰 안에만 저장되니 걱정 없단다.</p>
       </div>
 
-      {docs?.length === 0 && <div className="empty">첨부된 문서가 없습니다.</div>}
+      {docs?.length === 0 && <div className="empty">아직 문서가 없구나.<br />등기부등본부터 챙겨두는 게 순서란다.</div>}
 
       {DOC_TYPES.map(t => {
         const items = (docs ?? []).filter(d => d.type === t)

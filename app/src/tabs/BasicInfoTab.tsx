@@ -24,7 +24,7 @@ export default function BasicInfoTab({ project }: { project: Project }) {
   return (
     <div className="card">
       <div className="group-title">기본정보</div>
-      <p className="muted" style={{ marginBottom: 12 }}>입력 즉시 자동 저장됩니다.</p>
+      <p className="muted" style={{ marginBottom: 12 }}>적으면 바로바로 저장되니 걱정 말고 하나씩 채워보렴.</p>
       {FIELDS.map((row, ri) => (
         <div key={ri} className={row.length === 2 ? 'field-row' : undefined}>
           {row.map(f => (

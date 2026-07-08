@@ -38,7 +38,7 @@ export default function Home() {
   return (
     <>
       <header className="app-header">
-        <h1>🏠 SafeRent Korea — 월세 검토</h1>
+        <h1>🐸 SafeRent Korea — 개구리 가족의 월세 검토</h1>
       </header>
       <div className="page">
         <button className="btn full" onClick={onNew}>＋ 새 월세 검토 시작</button>
@@ -57,8 +57,8 @@ export default function Home() {
         <div style={{ height: 16 }} />
         {projects && projects.length === 0 && (
           <div className="empty">
-            아직 검토 중인 매물이 없습니다.<br />
-            후보 매물을 등록하고 사기 위험을 점검해 보세요.
+            아직 검토 중인 집이 없구나.<br />
+            후보를 등록하고 아빠랑 같이 꼼꼼히 살펴보자.
           </div>
         )}
         {projects?.map(p => {

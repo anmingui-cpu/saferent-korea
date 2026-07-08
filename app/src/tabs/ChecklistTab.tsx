@@ -21,12 +21,6 @@ export default function ChecklistTab({ project }: { project: Project }) {
       <div className="chk-label">
         <div className="name">{it.label}{it.important && <span className="star">＊</span>}</div>
         {it.hint && <div className="hint">{it.hint}</div>}
-        {project.checklist[it.id] === 'bad' && (
-          <div className="chk-memo">
-            <input defaultValue={project.checklistMemo[it.id] ?? ''} placeholder="문제 내용 메모"
-              onChange={e => setMemo(it.id, e.target.value)} />
-          </div>
-        )}
       </div>
       <div className="chk-states">
         {STATES.map(s => (
@@ -37,13 +31,19 @@ export default function ChecklistTab({ project }: { project: Project }) {
           </button>
         ))}
       </div>
+      {project.checklist[it.id] === 'bad' && (
+        <div className="chk-memo">
+          <textarea defaultValue={project.checklistMemo[it.id] ?? ''} placeholder="어떤 문제가 있었는지 자세히 적어두렴"
+            onChange={e => setMemo(it.id, e.target.value)} />
+        </div>
+      )}
     </div>
   )
 
   return (
     <>
       <p className="muted" style={{ marginBottom: 10 }}>
-        <span style={{ color: 'var(--danger)' }}>＊</span> 표시는 핵심 항목입니다. 나머지는 접혀 있으며 필요할 때 펼쳐서 확인하세요.
+        <span style={{ color: 'var(--danger)' }}>＊</span> 표시는 아빠가 꼭 확인하라고 골라둔 핵심 항목이야. 나머지는 접어뒀으니 시간 되면 펼쳐서 보렴.
       </p>
       {CHECKLIST_GROUPS.map(g => {
         const important = g.items.filter(i => i.important)

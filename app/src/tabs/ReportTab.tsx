@@ -38,8 +38,8 @@ export default function ReportTab({ project }: { project: Project }) {
       <div className="card">
         <div className="group-title">AI 검토용 리포트</div>
         <p className="muted" style={{ marginBottom: 10 }}>
-          지금까지 입력한 모든 자료를 Markdown 하나로 정리합니다. 생성된 리포트를 등기부등본·계약서 파일과 함께
-          AI(Claude 등)에 붙여넣으면 계약 위험 검토를 받을 수 있습니다. 리포트는 버튼을 눌렀을 때만 생성됩니다.
+          지금까지 정리한 자료를 리포트 하나로 묶어줄게. 이걸 등기부등본·계약서 파일과 함께
+          AI(Claude 같은 것)에 붙여넣으면 계약 위험을 검토받을 수 있단다. 버튼을 눌렀을 때만 만들어지니 안심하렴.
         </p>
         <button className="btn full" onClick={generate}>📋 리포트 생성</button>
       </div>
