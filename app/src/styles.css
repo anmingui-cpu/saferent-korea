@@ -1,0 +1,174 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f4f6fa;
+  --card: #ffffff;
+  --text: #1b2430;
+  --muted: #6b7686;
+  --line: #e3e8ef;
+  --primary: #1a56db;
+  --primary-soft: #e8effc;
+  --danger: #dc2626;
+  --ok: #16a34a;
+  --warn: #d97706;
+  --radius: 12px;
+}
+
+html, body { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Malgun Gothic', sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root { max-width: 640px; margin: 0 auto; min-height: 100%; }
+
+.app-header {
+  position: sticky; top: 0; z-index: 10;
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
+  padding: 12px 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.app-header h1 { font-size: 17px; font-weight: 700; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.app-header .back { border: none; background: none; font-size: 20px; cursor: pointer; color: var(--text); padding: 4px 8px; }
+
+.page { padding: 16px; padding-bottom: 48px; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  border: none; border-radius: 10px; cursor: pointer;
+  font-size: 15px; font-weight: 600; padding: 11px 16px;
+  background: var(--primary); color: #fff;
+}
+.btn.full { width: 100%; }
+.btn.ghost { background: var(--primary-soft); color: var(--primary); }
+.btn.danger { background: #fee2e2; color: var(--danger); }
+.btn.sm { padding: 6px 10px; font-size: 13px; border-radius: 8px; }
+
+/* ─── 폼 ─── */
+.field { margin-bottom: 12px; }
+.field label { display: block; font-size: 13px; font-weight: 600; color: var(--muted); margin-bottom: 4px; }
+.field input, .field textarea, .field select {
+  width: 100%; padding: 10px 12px;
+  border: 1px solid var(--line); border-radius: 8px;
+  font-size: 15px; font-family: inherit; background: #fff; color: var(--text);
+}
+.field input:focus, .field textarea:focus, .field select:focus { outline: 2px solid var(--primary); outline-offset: -1px; }
+.field textarea { resize: vertical; min-height: 72px; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+/* ─── 프로젝트 카드 ─── */
+.proj-card { display: block; text-decoration: none; color: inherit; cursor: pointer; }
+.proj-card .title { font-weight: 700; font-size: 16px; margin-bottom: 2px; }
+.proj-card .sub { color: var(--muted); font-size: 13px; }
+.proj-card .row { display: flex; align-items: center; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+
+.badge {
+  display: inline-block; padding: 3px 10px; border-radius: 999px;
+  font-size: 12px; font-weight: 700; color: #fff;
+}
+.badge.stage { background: var(--primary-soft); color: var(--primary); }
+
+/* ─── 탭 ─── */
+.tabs {
+  display: flex; gap: 4px; overflow-x: auto;
+  position: sticky; top: 49px; z-index: 9;
+  background: var(--bg); padding: 10px 16px 8px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  flex-shrink: 0; border: 1px solid var(--line); background: var(--card);
+  border-radius: 999px; padding: 7px 14px; font-size: 13px; font-weight: 600;
+  color: var(--muted); cursor: pointer; white-space: nowrap;
+}
+.tab.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+/* ─── 체크리스트 ─── */
+.chk-item { display: flex; align-items: flex-start; gap: 8px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.chk-item:last-child { border-bottom: none; }
+.chk-label { flex: 1; }
+.chk-label .name { font-weight: 600; }
+.chk-label .star { color: var(--danger); margin-left: 2px; }
+.chk-label .hint { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+.chk-states { display: flex; gap: 4px; flex-shrink: 0; }
+.chk-states button {
+  border: 1px solid var(--line); background: #fff; border-radius: 8px;
+  padding: 5px 9px; font-size: 12.5px; cursor: pointer; color: var(--muted); font-weight: 600;
+}
+.chk-states button.on-ok { background: #dcfce7; border-color: var(--ok); color: var(--ok); }
+.chk-states button.on-bad { background: #fee2e2; border-color: var(--danger); color: var(--danger); }
+.chk-states button.on-na { background: #eef1f5; border-color: var(--muted); color: var(--muted); }
+.chk-memo input { width: 100%; margin-top: 6px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 8px; font-size: 13px; }
+
+details.fold { margin-top: 4px; }
+details.fold summary {
+  cursor: pointer; font-size: 13px; font-weight: 600; color: var(--primary);
+  padding: 8px 0; list-style: none; user-select: none;
+}
+details.fold summary::before { content: '▸ '; }
+details.fold[open] summary::before { content: '▾ '; }
+
+.group-title { font-size: 15px; font-weight: 700; margin: 4px 0 6px; }
+.group-intro { font-size: 13px; color: var(--muted); background: var(--primary-soft); border-radius: 8px; padding: 10px 12px; margin-bottom: 10px; }
+
+/* ─── 위험요소 ─── */
+.risk-item { display: flex; align-items: flex-start; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
+.risk-item:last-child { border-bottom: none; }
+.risk-item input[type=checkbox] { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--danger); flex-shrink: 0; }
+.risk-item .score { font-weight: 700; color: var(--danger); font-size: 13px; flex-shrink: 0; }
+.risk-item .desc { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+
+.risk-summary { text-align: center; padding: 20px 16px; }
+.risk-summary .score-big { font-size: 40px; font-weight: 800; }
+.risk-summary .level { font-size: 18px; font-weight: 700; margin-top: 2px; }
+
+/* ─── 사진 ─── */
+.photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.photo-cell { position: relative; aspect-ratio: 1; border-radius: 10px; overflow: hidden; background: var(--line); }
+.photo-cell img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo-cell .cat { position: absolute; left: 4px; bottom: 4px; background: rgba(0,0,0,.6); color: #fff; font-size: 10.5px; padding: 2px 6px; border-radius: 6px; }
+.photo-cell .del { position: absolute; right: 4px; top: 4px; background: rgba(0,0,0,.55); color: #fff; border: none; border-radius: 6px; width: 22px; height: 22px; cursor: pointer; font-size: 12px; }
+
+/* ─── 진행단계 ─── */
+.stage-flow { display: flex; flex-wrap: wrap; gap: 6px; }
+.stage-chip {
+  border: 1px solid var(--line); background: var(--card); color: var(--muted);
+  border-radius: 999px; padding: 6px 12px; font-size: 12.5px; font-weight: 600; cursor: pointer;
+}
+.stage-chip.done { background: var(--primary-soft); border-color: var(--primary-soft); color: var(--primary); }
+.stage-chip.current { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+/* ─── 리포트 ─── */
+.report-pre {
+  white-space: pre-wrap; word-break: break-word;
+  font-family: ui-monospace, Consolas, monospace; font-size: 12.5px;
+  background: #0f172a; color: #e2e8f0; border-radius: var(--radius);
+  padding: 14px; max-height: 55vh; overflow: auto;
+}
+
+.empty { text-align: center; color: var(--muted); padding: 40px 16px; font-size: 14px; }
+.muted { color: var(--muted); font-size: 13px; }
+.section-title { font-size: 16px; font-weight: 700; margin: 18px 0 8px; }
+
+.doc-item { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.doc-item:last-child { border-bottom: none; }
+.doc-item .meta { flex: 1; min-width: 0; }
+.doc-item .name { font-weight: 600; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.fab-space { height: 24px; }
+.saved-hint { position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); background: rgba(15,23,42,.85); color: #fff; font-size: 12.5px; padding: 6px 14px; border-radius: 999px; z-index: 50; pointer-events: none; opacity: 0; transition: opacity .25s; }
+.saved-hint.show { opacity: 1; }
