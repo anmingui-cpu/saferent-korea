@@ -17,7 +17,7 @@ export default function VisitsTab({ projectId }: { projectId: number }) {
     <>
       <button className="btn full ghost" onClick={addVisit}>＋ 방문 기록 추가</button>
       <div style={{ height: 12 }} />
-      {visits?.length === 0 && <div className="empty">아직 방문 기록이 없구나.<br />집은 여러 번 가볼수록 보이는 게 많단다. 갈 때마다 기록해두렴.</div>}
+      {visits?.length === 0 && <div className="empty">아직 방문 기록이 없어.<br />집은 여러 번 가볼수록 보이는 게 많아. 갈 때마다 기록해둬.</div>}
       {visits?.map((v, i) => (
         <div className="card" key={v.id}>
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: 8 }}>

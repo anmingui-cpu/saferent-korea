@@ -18,14 +18,14 @@ export default function RisksTab({ project }: { project: Project }) {
         </p>
         {level === '매우 위험' && (
           <p style={{ color: 'var(--danger)', fontWeight: 700, marginTop: 8 }}>
-            얘야, 이 집은 안 되겠다. 계약을 멈추고 전문가와 먼저 상담하자.
+            이 집은 안 돼. 계약 멈추고 전문가랑 먼저 상담해.
           </p>
         )}
       </div>
 
       <div className="card">
         <div className="group-title">위험요소 점검</div>
-        <p className="muted" style={{ marginBottom: 6 }}>해당하는 게 있으면 전부 체크하렴. 점수는 자동으로 더해진단다.</p>
+        <p className="muted" style={{ marginBottom: 6 }}>해당하는 게 있으면 전부 체크해. 점수는 자동으로 합산돼.</p>
         {RISK_ITEMS.map(r => (
           <label className="risk-item" key={r.id}>
             <input type="checkbox" checked={!!project.risks[r.id]} onChange={() => toggle(r.id)} />

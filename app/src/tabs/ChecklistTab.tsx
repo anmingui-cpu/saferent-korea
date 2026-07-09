@@ -33,7 +33,7 @@ export default function ChecklistTab({ project }: { project: Project }) {
       {it.hint && <div className="chk-hint">{it.hint}</div>}
       {project.checklist[it.id] === 'bad' && (
         <div className="chk-memo">
-          <textarea defaultValue={project.checklistMemo[it.id] ?? ''} placeholder="어떤 문제가 있었는지 자세히 적어두렴"
+          <textarea defaultValue={project.checklistMemo[it.id] ?? ''} placeholder="어떤 문제가 있었는지 자세히 적어둬"
             onChange={e => setMemo(it.id, e.target.value)} />
         </div>
       )}
@@ -43,7 +43,7 @@ export default function ChecklistTab({ project }: { project: Project }) {
   return (
     <>
       <p className="muted" style={{ marginBottom: 10 }}>
-        <span style={{ color: 'var(--danger)' }}>＊</span> 표시는 아빠가 꼭 확인하라고 골라둔 핵심 항목이야. 나머지는 접어뒀으니 시간 되면 펼쳐서 보렴.
+        <span style={{ color: 'var(--danger)' }}>＊</span> 표시는 꼭 확인해야 할 핵심 항목이야. 나머지는 접어뒀으니 시간 되면 펼쳐서 봐.
       </p>
       {CHECKLIST_GROUPS.map(g => {
         const important = g.items.filter(i => i.important)

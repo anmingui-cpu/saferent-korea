@@ -57,8 +57,8 @@ export default function Home() {
         <div style={{ height: 16 }} />
         {projects && projects.length === 0 && (
           <div className="empty">
-            아직 검토 중인 집이 없구나.<br />
-            후보를 등록하고 아빠랑 같이 꼼꼼히 살펴보자.
+            아직 등록된 집이 없어.<br />
+            후보 집 추가하고 같이 꼼꼼히 살펴보자.
           </div>
         )}
         {projects?.map(p => {

@@ -63,13 +63,13 @@ export default function PhotosTab({ projectId }: { projectId: number }) {
         </button>
         {savedCount > 0 && (
           <p style={{ marginTop: 8, color: 'var(--ok)', fontWeight: 600, fontSize: 13 }}>
-            ✅ [{category}]로 총 {savedCount}장 저장됐단다!
+            ✅ [{category}]로 총 {savedCount}장 저장됐어!
           </p>
         )}
-        <p className="muted" style={{ marginTop: 6 }}>분류를 먼저 고른 뒤 찍으면 바로 저장된단다.</p>
+        <p className="muted" style={{ marginTop: 6 }}>분류 먼저 고르고 찍으면 바로 저장돼.</p>
       </div>
 
-      {photos?.length === 0 && <div className="empty">아직 사진이 없구나.<br />많이 찍어둘수록 나중에 비교할 때 큰 도움이 된단다.</div>}
+      {photos?.length === 0 && <div className="empty">아직 사진이 없어.<br />많이 찍어둘수록 나중에 비교할 때 도움이 돼.</div>}
 
       {grouped.map(g => (
         <div className="card" key={g.cat}>

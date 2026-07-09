@@ -60,13 +60,13 @@ export default function ReportTab({ project }: { project: Project }) {
       <div className="card">
         <div className="group-title">AI 검토용 리포트</div>
         <p className="muted" style={{ marginBottom: 12 }}>
-          지금까지 입력한 자료를 하나로 묶어준단다. AI(Claude 같은 것)에 넘길 때 두 가지 방법이 있어.
+          지금까지 입력한 자료를 하나로 묶어줘. AI(Claude 같은 것)에 넘길 때 두 가지 방법이 있어.
         </p>
         <button className="btn full" style={{ marginBottom: 8 }} onClick={downloadHtml} disabled={htmlLoading}>
           {htmlLoading ? '⏳ 사진 변환 중…' : '📦 HTML 내보내기 (사진 포함)'}
         </button>
         <p className="muted" style={{ marginBottom: 12 }}>
-          HTML 파일 하나에 현장 사진이 전부 포함돼. 이 파일을 등기부등본·계약서 PDF와 함께 AI에 첨부하렴.
+          HTML 파일 하나에 현장 사진이 전부 포함돼. 이 파일을 등기부등본·계약서 PDF와 함께 AI에 첨부해.
         </p>
         <button className="btn ghost full" onClick={generate}>📋 텍스트 리포트 생성 (복사용)</button>
       </div>

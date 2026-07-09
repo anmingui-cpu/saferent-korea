@@ -19,7 +19,7 @@ export default function LegalTab({ project }: { project: Project }) {
   return (
     <>
       <p className="muted" style={{ marginBottom: 10 }}>
-        설명을 읽고 서류를 하나하나 맞춰보렴. 문제가 보이면 '위험도' 탭에 가서 해당 항목도 체크해두는 거야.
+        설명을 읽고 서류를 하나하나 맞춰봐. 문제가 보이면 '위험도' 탭에서 해당 항목도 체크해둬.
       </p>
       {LEGAL_GROUPS.map(g => (
         <div className="card" key={g.name}>
@@ -42,7 +42,7 @@ export default function LegalTab({ project }: { project: Project }) {
               <div className="chk-hint">{it.desc}</div>
               {project.legal[it.id] === 'bad' && (
                 <div className="chk-memo">
-                  <textarea defaultValue={project.legalMemo[it.id] ?? ''} placeholder="어떤 문제를 발견했는지 자세히 적어두렴"
+                  <textarea defaultValue={project.legalMemo[it.id] ?? ''} placeholder="어떤 문제를 발견했는지 자세히 적어둬"
                     onChange={e => setMemo(it.id, e.target.value)} />
                 </div>
               )}
