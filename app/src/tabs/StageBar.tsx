@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { CHECKLIST_GROUPS, LEGAL_GROUPS } from '../data'
+import { CHECKLIST_GROUPS, LEGAL_GROUPS, REQUIRED_PHOTO_CATS } from '../data'
 import { db, updateProject, type Project } from '../db'
 
 const IMPORTANT_ITEMS = CHECKLIST_GROUPS.flatMap(g => g.items.filter(i => i.important))
@@ -14,9 +14,9 @@ export default function StageBar({ project }: { project: Project }) {
   const visitCount = useLiveQuery(
     () => db.visits.where('projectId').equals(project.id!).count(), [project.id]
   ) ?? 0
-  const photoCount = useLiveQuery(
-    () => db.photos.where('projectId').equals(project.id!).count(), [project.id]
-  ) ?? 0
+  const photos = useLiveQuery(
+    () => db.photos.where('projectId').equals(project.id!).toArray(), [project.id]
+  ) ?? []
   const docs = useLiveQuery(
     () => db.docs.where('projectId').equals(project.id!).toArray(), [project.id]
   ) ?? []
@@ -30,7 +30,7 @@ export default function StageBar({ project }: { project: Project }) {
   const stages = [
     { label: '후보등록', pct: hasInfo ? 100 : 0, manual: false },
     { label: '방문', pct: visitCount > 0 ? 100 : 0, manual: false },
-    { label: '사진등록', pct: Math.min(Math.round(photoCount / 5 * 100), 100), manual: false },
+    { label: '사진등록', pct: Math.round(REQUIRED_PHOTO_CATS.reduce((sum, cat) => sum + Math.min(photos.filter(p => p.category === cat).length, 2), 0) / (REQUIRED_PHOTO_CATS.length * 2) * 100), manual: false },
     { label: '체크리스트', pct: Math.round(checklistDone / IMPORTANT_ITEMS.length * 100), manual: false },
     { label: '서류등록', pct: Math.round(keyDocsDone / KEY_DOCS.length * 100), manual: false },
     { label: '법률검수', pct: Math.round(legalDone / LEGAL_ITEMS.length * 100), manual: false },

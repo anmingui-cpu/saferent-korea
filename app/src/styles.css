@@ -177,6 +177,17 @@ details.fold[open] summary::before { content: '▾ '; }
 .sc-fill { height: 100%; border-radius: 2px; transition: width .3s; }
 .stage-arrow { flex-shrink: 0; color: #c5cbd4; font-size: 11px; }
 
+/* ─── 필수 사진 ─── */
+.req-progress { font-size: 13px; font-weight: 600; color: var(--muted); }
+.req-progress.done { color: var(--ok); }
+.req-cat { padding: 10px 0; border-bottom: 1px solid var(--line); }
+.req-cat:last-child { border-bottom: none; }
+.req-cat-header { display: flex; align-items: center; gap: 8px; }
+.req-cat-name { flex: 1; font-weight: 600; font-size: 14px; }
+.req-cat-count { font-size: 12.5px; font-weight: 600; color: var(--muted); }
+.req-cat-count.done { color: var(--ok); }
+.req-cat-empty { font-size: 12.5px; color: var(--muted); margin-top: 8px; padding: 10px; background: var(--bg); border-radius: 8px; text-align: center; }
+
 /* ─── 리포트 ─── */
 .report-pre {
   white-space: pre-wrap; word-break: break-word;

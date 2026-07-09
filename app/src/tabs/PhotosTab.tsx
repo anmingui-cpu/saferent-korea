@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '../db'
-import { PHOTO_CATEGORIES } from '../data'
+import { PHOTO_CATEGORIES, REQUIRED_PHOTO_CATS } from '../data'
 
 function PhotoImg({ blob }: { blob: Blob }) {
   const [url, setUrl] = useState('')
@@ -18,6 +18,10 @@ export default function PhotosTab({ projectId }: { projectId: number }) {
   const [savedCount, setSavedCount] = useState(0)
   const fileRef = useRef<HTMLInputElement>(null)
   const cameraRef = useRef<HTMLInputElement>(null)
+  const reqFileRef = useRef<HTMLInputElement>(null)
+  const reqCameraRef = useRef<HTMLInputElement>(null)
+  const pendingCatRef = useRef<string | null>(null)
+
   const photos = useLiveQuery(
     () => db.photos.where('projectId').equals(projectId).reverse().sortBy('createdAt'),
     [projectId],
@@ -33,17 +37,35 @@ export default function PhotosTab({ projectId }: { projectId: number }) {
     if (cameraRef.current) cameraRef.current.value = ''
   }
 
+  const onReqFiles = async (files: FileList | null) => {
+    if (!files || !pendingCatRef.current) return
+    const cat = pendingCatRef.current
+    for (const f of Array.from(files)) {
+      await db.photos.add({ projectId, category: cat, memo: '', blob: f, createdAt: Date.now() })
+    }
+    setSavedCount(c => c + files.length)
+    if (reqFileRef.current) reqFileRef.current.value = ''
+    if (reqCameraRef.current) reqCameraRef.current.value = ''
+    pendingCatRef.current = null
+  }
+
   const remove = (id: number) => {
     if (confirm('사진을 삭제할까요?')) db.photos.delete(id)
   }
 
-  const grouped = PHOTO_CATEGORIES.map(cat => ({
-    cat,
-    items: (photos ?? []).filter(p => p.category === cat),
-  })).filter(g => g.items.length > 0)
+  const photosFor = (cat: string) => (photos ?? []).filter(p => p.category === cat)
+
+  const reqDone = REQUIRED_PHOTO_CATS.reduce((sum, cat) => sum + Math.min(photosFor(cat).length, 2), 0)
+  const reqTotal = REQUIRED_PHOTO_CATS.length * 2
+
+  const optionalGroups = PHOTO_CATEGORIES
+    .filter(c => !(REQUIRED_PHOTO_CATS as readonly string[]).includes(c))
+    .map(cat => ({ cat, items: photosFor(cat) }))
+    .filter(g => g.items.length > 0)
 
   return (
     <>
+      {/* 촬영 추가 */}
       <div className="card">
         <div className="field">
           <label>① 분류 먼저 고르고 → ② 카메라로 찍거나 앨범에서 선택</label>
@@ -69,9 +91,48 @@ export default function PhotosTab({ projectId }: { projectId: number }) {
         <p className="muted" style={{ marginTop: 6 }}>분류 먼저 고르고 찍으면 바로 저장돼.</p>
       </div>
 
-      {photos?.length === 0 && <div className="empty">아직 사진이 없어.<br />많이 찍어둘수록 나중에 비교할 때 도움이 돼.</div>}
+      {/* 필수 사진 — hidden inputs */}
+      <input ref={reqCameraRef} type="file" accept="image/*" capture="environment" hidden
+        onChange={e => onReqFiles(e.target.files)} />
+      <input ref={reqFileRef} type="file" accept="image/*" multiple hidden
+        onChange={e => onReqFiles(e.target.files)} />
 
-      {grouped.map(g => (
+      <div className="card">
+        <div className="group-title" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          필수 사진
+          <span className={`req-progress${reqDone >= reqTotal ? ' done' : ''}`}>{reqDone}/{reqTotal}</span>
+        </div>
+        <p className="muted" style={{ marginBottom: 10 }}>각 장소 2장씩 찍어두면 100% 달성이야.</p>
+        {REQUIRED_PHOTO_CATS.map(cat => {
+          const items = photosFor(cat)
+          const isComplete = items.length >= 2
+          return (
+            <div className="req-cat" key={cat}>
+              <div className="req-cat-header">
+                <span className="req-cat-name">{cat}</span>
+                <span className={`req-cat-count${isComplete ? ' done' : ''}`}>{items.length}/2</span>
+                <button className="btn ghost sm" onClick={() => { pendingCatRef.current = cat; reqCameraRef.current?.click() }}>📷</button>
+                <button className="btn ghost sm" onClick={() => { pendingCatRef.current = cat; reqFileRef.current?.click() }}>🖼</button>
+              </div>
+              {items.length > 0 ? (
+                <div className="photo-grid" style={{ marginTop: 8 }}>
+                  {items.map(p => (
+                    <div className="photo-cell" key={p.id}>
+                      <PhotoImg blob={p.blob} />
+                      <button className="del" onClick={() => remove(p.id!)}>✕</button>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="req-cat-empty">아직 사진이 없어</div>
+              )}
+            </div>
+          )
+        })}
+      </div>
+
+      {/* 선택 사진 */}
+      {optionalGroups.map(g => (
         <div className="card" key={g.cat}>
           <div className="group-title">{g.cat} ({g.items.length})</div>
           <div className="photo-grid">
