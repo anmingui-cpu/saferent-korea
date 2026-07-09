@@ -133,7 +133,7 @@ export default function PhotosTab({ projectId }: { projectId: number }) {
         <div className="field">
           <label>분류 선택</label>
           <select value={category} onChange={e => setCategory(e.target.value)}>
-            {PHOTO_CATEGORIES.map(c => <option key={c}>{c}</option>)}
+            {PHOTO_CATEGORIES.filter(c => !(REQUIRED_PHOTO_CATS as readonly string[]).includes(c)).map(c => <option key={c}>{c}</option>)}
           </select>
         </div>
         <input ref={cameraRef} type="file" accept="image/*" capture="environment" hidden

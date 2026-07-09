@@ -4,7 +4,7 @@ import { db } from '../db'
 import { DOC_TYPES, DOC_TYPE_DESCS, REQUIRED_DOC_TYPES } from '../data'
 
 export default function DocsTab({ projectId }: { projectId: number }) {
-  const [type, setType] = useState(DOC_TYPES[0])
+  const [type, setType] = useState(() => DOC_TYPES.find(t => !(REQUIRED_DOC_TYPES as readonly string[]).includes(t)) ?? DOC_TYPES[0])
   const fileRef = useRef<HTMLInputElement>(null)
   const reqFileRef = useRef<HTMLInputElement>(null)
   const pendingTypeRef = useRef<string | null>(null)
@@ -104,7 +104,7 @@ export default function DocsTab({ projectId }: { projectId: number }) {
         <div className="field">
           <label>문서 종류 선택 후 추가</label>
           <select value={type} onChange={e => setType(e.target.value)}>
-            {DOC_TYPES.map(t => <option key={t}>{t}</option>)}
+            {DOC_TYPES.filter(t => !(REQUIRED_DOC_TYPES as readonly string[]).includes(t)).map(t => <option key={t}>{t}</option>)}
           </select>
         </div>
         {DOC_TYPE_DESCS[type] && (
