@@ -1,12 +1,10 @@
 import { Fragment } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { CHECKLIST_GROUPS, LEGAL_GROUPS, REQUIRED_PHOTO_CATS } from '../data'
+import { CHECKLIST_GROUPS, LEGAL_GROUPS, REQUIRED_PHOTO_CATS, REQUIRED_DOC_TYPES } from '../data'
 import { db, updateProject, type Project } from '../db'
 
 const IMPORTANT_ITEMS = CHECKLIST_GROUPS.flatMap(g => g.items.filter(i => i.important))
 const LEGAL_ITEMS = LEGAL_GROUPS.flatMap(g => g.items)
-const KEY_DOCS = ['등기부등본', '건축물대장', '계약서', '중개대상물 확인설명서']
-
 // 수동 완료 단계 시작 인덱스 (위험도 = 6번째)
 const MANUAL_START = 6
 
@@ -24,7 +22,7 @@ export default function StageBar({ project }: { project: Project }) {
   const docTypes = new Set(docs.map(d => d.type))
   const checklistDone = IMPORTANT_ITEMS.filter(it => project.checklist[it.id]).length
   const legalDone = LEGAL_ITEMS.filter(it => project.legal[it.id]).length
-  const keyDocsDone = KEY_DOCS.filter(t => docTypes.has(t)).length
+  const keyDocsDone = REQUIRED_DOC_TYPES.filter(t => docTypes.has(t)).length
   const hasInfo = !!(project.info.address || project.info.buildingName)
 
   const stages = [
@@ -32,7 +30,7 @@ export default function StageBar({ project }: { project: Project }) {
     { label: '방문', pct: visitCount > 0 ? 100 : 0, manual: false },
     { label: '사진등록', pct: Math.round(REQUIRED_PHOTO_CATS.reduce((sum, cat) => sum + Math.min(photos.filter(p => p.category === cat).length, 2), 0) / (REQUIRED_PHOTO_CATS.length * 2) * 100), manual: false },
     { label: '체크리스트', pct: Math.round(checklistDone / IMPORTANT_ITEMS.length * 100), manual: false },
-    { label: '서류등록', pct: Math.round(keyDocsDone / KEY_DOCS.length * 100), manual: false },
+    { label: '서류등록', pct: Math.round(keyDocsDone / REQUIRED_DOC_TYPES.length * 100), manual: false },
     { label: '법률검수', pct: Math.round(legalDone / LEGAL_ITEMS.length * 100), manual: false },
     { label: '위험도', pct: project.stage > MANUAL_START ? 100 : 0, manual: true },
     { label: 'AI검토', pct: project.stage > MANUAL_START + 1 ? 100 : 0, manual: true },

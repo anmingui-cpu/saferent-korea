@@ -6,6 +6,7 @@ export const REQUIRED_PHOTO_CATS = ['거실', '방', '주방', '화장실'] as c
 export const PHOTO_CATEGORIES = ['건물 외관', '공동현관', '복도', '거실', '방', '화장실', '주방', '창문', '베란다', '천장', '바닥', '옵션', '주차장', '기타']
 
 // ─── 첨부문서 종류 ───
+export const REQUIRED_DOC_TYPES = ['등기부등본', '건축물대장', '계약서', '중개대상물 확인설명서'] as const
 export const DOC_TYPES = ['등기부등본', '건축물대장', '계약서', '중개대상물 확인설명서', '공인중개사 등록증', '신분증 확인자료', '영수증', '보증보험 자료', '기타']
 
 export const DOC_TYPE_DESCS: Record<string, { why: string; role: string }> = {
