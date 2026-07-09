@@ -65,32 +65,6 @@ export default function PhotosTab({ projectId }: { projectId: number }) {
 
   return (
     <>
-      {/* 촬영 추가 */}
-      <div className="card">
-        <div className="field">
-          <label>① 분류 먼저 고르고 → ② 카메라로 찍거나 앨범에서 선택</label>
-          <select value={category} onChange={e => setCategory(e.target.value)}>
-            {PHOTO_CATEGORIES.map(c => <option key={c}>{c}</option>)}
-          </select>
-        </div>
-        <input ref={cameraRef} type="file" accept="image/*" capture="environment" hidden
-          onChange={e => onFiles(e.target.files)} />
-        <input ref={fileRef} type="file" accept="image/*" multiple hidden
-          onChange={e => onFiles(e.target.files)} />
-        <button className="btn full" style={{ marginBottom: 8 }} onClick={() => cameraRef.current?.click()}>
-          📷 지금 바로 찍어서 등록
-        </button>
-        <button className="btn ghost full" onClick={() => fileRef.current?.click()}>
-          🖼 앨범에서 골라서 등록
-        </button>
-        {savedCount > 0 && (
-          <p style={{ marginTop: 8, color: 'var(--ok)', fontWeight: 600, fontSize: 13 }}>
-            ✅ [{category}]로 총 {savedCount}장 저장됐어!
-          </p>
-        )}
-        <p className="muted" style={{ marginTop: 6 }}>분류 먼저 고르고 찍으면 바로 저장돼.</p>
-      </div>
-
       {/* 필수 사진 — hidden inputs */}
       <input ref={reqCameraRef} type="file" accept="image/*" capture="environment" hidden
         onChange={e => onReqFiles(e.target.files)} />
@@ -152,6 +126,33 @@ export default function PhotosTab({ projectId }: { projectId: number }) {
           ))}
         </div>
       ))}
+
+      {/* 선택 사진 추가 */}
+      <div className="card">
+        <div className="group-title">선택 사진 추가</div>
+        <div className="field">
+          <label>분류 선택</label>
+          <select value={category} onChange={e => setCategory(e.target.value)}>
+            {PHOTO_CATEGORIES.map(c => <option key={c}>{c}</option>)}
+          </select>
+        </div>
+        <input ref={cameraRef} type="file" accept="image/*" capture="environment" hidden
+          onChange={e => onFiles(e.target.files)} />
+        <input ref={fileRef} type="file" accept="image/*" multiple hidden
+          onChange={e => onFiles(e.target.files)} />
+        <button className="btn full" style={{ marginBottom: 8 }} onClick={() => cameraRef.current?.click()}>
+          📷 지금 바로 찍어서 등록
+        </button>
+        <button className="btn ghost full" onClick={() => fileRef.current?.click()}>
+          🖼 앨범에서 골라서 등록
+        </button>
+        {savedCount > 0 && (
+          <p style={{ marginTop: 8, color: 'var(--ok)', fontWeight: 600, fontSize: 13 }}>
+            ✅ [{category}]로 총 {savedCount}장 저장됐어!
+          </p>
+        )}
+        <p className="muted" style={{ marginTop: 6 }}>분류 먼저 고르고 찍으면 바로 저장돼.</p>
+      </div>
     </>
   )
 }
