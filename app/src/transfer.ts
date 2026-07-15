@@ -58,8 +58,10 @@ export async function exportProject(id: number) {
   const a = document.createElement('a')
   a.href = url
   a.download = `SafeRent_${name}.json`
+  document.body.appendChild(a)
   a.click()
-  URL.revokeObjectURL(url)
+  document.body.removeChild(a)
+  setTimeout(() => URL.revokeObjectURL(url), 10_000)
 }
 
 export async function importProject(file: File): Promise<number> {

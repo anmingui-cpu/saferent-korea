@@ -14,8 +14,7 @@ export default function Home() {
   const onImport = async (files: FileList | null) => {
     if (!files?.[0]) return
     try {
-      const id = await importProject(files[0])
-      nav(`/p/${id}`)
+      await importProject(files[0])
     } catch (err) {
       alert(err instanceof Error ? err.message : '가져오기에 실패했습니다')
     } finally {
